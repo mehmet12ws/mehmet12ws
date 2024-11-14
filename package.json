@@ -1,8 +1,8 @@
 {
-  "main": "index.js",
+  "main": "botss.js",
   "type": "module",
   "scripts": {
-    "start": "node test.js"
+    "start": "node botss.js"
   },
   "dependencies": {
     "discord.js": "^14.16.3",
