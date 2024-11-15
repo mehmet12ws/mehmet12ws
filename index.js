@@ -1,6 +1,6 @@
 import { Client, GatewayIntentBits } from 'discord.js';
 import fs from 'fs';
-import express from 'express'; // express'i import ile yükledik
+import express from 'express'; 
 
 const intents = [
     GatewayIntentBits.Guilds,
@@ -16,7 +16,6 @@ let golSayilari = {};
 let asistSayilari = {};
 let lineups = {};
 
-// Save data to file
 function saveData() {
     const data = {
         gol_sayilari: golSayilari,
@@ -26,7 +25,6 @@ function saveData() {
     fs.writeFileSync(dataFile, JSON.stringify(data, null, 2));
 }
 
-// Load data from file
 function loadData() {
     if (fs.existsSync(dataFile)) {
         const rawData = fs.readFileSync(dataFile);
@@ -44,7 +42,6 @@ function loadData() {
     }
 }
 
-// Reset data
 function resetData() {
     golSayilari = {};
     asistSayilari = {};
@@ -52,13 +49,11 @@ function resetData() {
     saveData();
 }
 
-// On bot ready
 client.once('ready', () => {
     loadData();
     console.log(`${client.user.tag} olarak giriş yapıldı!`);
 });
 
-// Handle incoming messages
 client.on('messageCreate', async (message) => {
     if (message.author.bot) return;
 
@@ -79,14 +74,12 @@ client.on('messageCreate', async (message) => {
         let asistResmi = '';
         let varResmi = 'https://cdn.wmaraci.com/nedir/VAR.jpg';
 
-        // VAR command: !var
         if (command === 'var') {
             message.reply('Pozisyon "VAR" Ekibimiz Tarafından İncelenmekte...');
             await message.reply(varResmi); 
             return;
         }
 
-        // Goal command: !goal @user
         if (command === 'goal') {
             if (args.length === 0) return message.reply('Lütfen bir kullanıcı belirtin!');
             const user = message.mentions.members.first();
@@ -99,7 +92,6 @@ client.on('messageCreate', async (message) => {
             golResmi = 'https://cdn.discordapp.com/attachments/1304891541021528146/1305234896591261786/icardii.gif';
         }
 
-        // Assist command: !asist @user
         if (command === 'asist') {
             if (args.length === 0) return message.reply('Lütfen bir kullanıcı belirtin!');
             const user = message.mentions.members.first();
@@ -112,7 +104,6 @@ client.on('messageCreate', async (message) => {
             asistResmi = 'https://cdn.discordapp.com/attachments/1174853186230681630/1306314370426339469/untitled.png?ex=67363790&is=6734e610&hm=0008a9823819067c661174e3706f870d62b864d0b4d096078c5d51c5e7db42eb&';
         }
 
-        // Goal removal command: !golal @user amount
         if (command === 'golal') {
             if (args.length < 2) return message.reply('Lütfen bir kullanıcı ve silmek istediğiniz gol sayısını belirtin!');
             const user = message.mentions.members.first();
@@ -127,7 +118,6 @@ client.on('messageCreate', async (message) => {
             golMesaji = `**${user.user.tag}** Golün Alındı Yeni Gol Sayın **${golSayilari[user.id]}**`;
         }
 
-        // Assist removal command: !asistal @user amount
         if (command === 'asistal') {
             if (args.length < 2) return message.reply('Lütfen bir kullanıcı ve silmek istediğiniz asist sayısını belirtin!');
             const user = message.mentions.members.first();
@@ -142,7 +132,6 @@ client.on('messageCreate', async (message) => {
             asistMesaji = `**${user.user.tag}** Asistin Silindi Yeni Asist Sayın: **${asistSayilari[user.id]}**`;
         }
 
-        // Goal King command: !golkralı
         if (command === 'golkralı') {
             if (Object.keys(golSayilari).length === 0) return message.reply('Henüz gol atan oyuncu yok!');
 
@@ -162,7 +151,6 @@ client.on('messageCreate', async (message) => {
             message.reply(response);
         }
 
-        // Assist King command: !asistkralı
         if (command === 'asistkralı') {
             if (Object.keys(asistSayilari).length === 0) return message.reply('Henüz asist yapan oyuncu yok!');
 
@@ -182,7 +170,6 @@ client.on('messageCreate', async (message) => {
             message.reply(response);
         }
 
-        // Send goal and assist message
         if (golMesaji || asistMesaji) {
             const response = `${golMesaji || ''}\n\n${asistMesaji || ''}`;
             const sentMessage = await message.channel.send(response);
@@ -199,11 +186,9 @@ client.on('messageCreate', async (message) => {
     }
 });
 
-// Express sunucu
 const app = express();
 const port = 3000;
 
-// Web sunucu
 app.get('/', (req, res) => {
   res.sendStatus(200);
 });
