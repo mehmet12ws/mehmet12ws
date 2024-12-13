@@ -88,7 +88,7 @@ client.on('messageCreate', async (message) => {
             golSayilari[user.id] = (golSayilari[user.id] || 0) + 1;
             saveData();
 
-            golMesaji = `**${user.user.tag}** :soccer: Toplam gol sayısı: **${golSayilari[user.id]}**`;
+            golMesaji = `**${user.user.tag}** :soccer: Toplam gol sayın: **${golSayilari[user.id]}**`;
             golResmi = 'https://cdn.discordapp.com/attachments/1304891541021528146/1305234896591261786/icardii.gif';
         }
 
@@ -100,7 +100,7 @@ client.on('messageCreate', async (message) => {
             asistSayilari[user.id] = (asistSayilari[user.id] || 0) + 1;
             saveData();
 
-            asistMesaji = `**${user.user.tag}** :champagne_glass: Toplam asist sayısı: **${asistSayilari[user.id]}**`;
+            asistMesaji = `**${user.user.tag}** :champagne_glass: Toplam asist sayın: **${asistSayilari[user.id]}**`;
             asistResmi = 'https://cdn.discordapp.com/attachments/1174853186230681630/1306314370426339469/untitled.png?ex=67363790&is=6734e610&hm=0008a9823819067c661174e3706f870d62b864d0b4d096078c5d51c5e7db42eb&';
         }
 
